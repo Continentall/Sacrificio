@@ -73,7 +73,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newMinPos: {x: 0, y: 0}
   newMaxPos: {x: 0, y: 0}
-  movePlayer: {x: 0, y: 5, z: 0}
+  movePlayer: {x: 0, y: -5, z: 0}
 --- !u!1 &8134051242129328364
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newMinPos: {x: 0, y: 0}
   newMaxPos: {x: 0, y: 0}
-  movePlayer: {x: 0, y: -5, z: 0}
+  movePlayer: {x: 0, y: 5, z: 0}
 --- !u!1 &8382987963092309662
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Pathfinding;
+[SerializeField]
 public class EnemyController : MonoBehaviour
 {
-    private Animator myAnim;
-    private Transform target;
-    public Transform homePos;
-
     [SerializeField]
-    private float speed = 0f;
+    private Animator myAnim;
+    [SerializeField]
+    private Transform target;
+    [SerializeField]
+    public Transform homePos;
+    public AIDestinationSetter aiDs;
+
     [SerializeField]
     private float maxRange = 0f;
     [SerializeField]
@@ -20,6 +23,8 @@ public class EnemyController : MonoBehaviour
     {
         myAnim = GetComponent<Animator>();
         target = FindObjectOfType<PlayerController>().transform;
+        aiDs = GetComponent<AIDestinationSetter>();
+        
     }
 
     // Update is called once per frame
@@ -35,15 +40,28 @@ public class EnemyController : MonoBehaviour
         myAnim.SetBool("isMoving", true);
         myAnim.SetFloat("moveX", (target.position.x - transform.position.x));
         myAnim.SetFloat("moveY", (target.position.y - transform.position.y));
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+        if (aiDs)
+            aiDs.target = target;
+        //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
     }
     public void Evade()
     {
         myAnim.SetFloat("moveX", (homePos.position.x - transform.position.x));
         myAnim.SetFloat("moveY", (homePos.position.y - transform.position.y));
-        transform.position = Vector3.MoveTowards(transform.position, homePos.position, speed * Time.deltaTime);
-
+        transform.position = Vector3.MoveTowards(transform.position, homePos.position, 2 * Time.deltaTime);
         if (Vector3.Distance(transform.position, homePos.position) == 0)
             myAnim.SetBool("isMoving", false);
+        if (aiDs)
+            aiDs.target = homePos;
+
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Damage")
+        {
+            Vector2 diff = transform.position - other.transform.position;
+            transform.position = new Vector2(transform.position.x + diff.x * 0.5f, transform.position.y + diff.y * 0.5f);
+        }
     }
 } 
