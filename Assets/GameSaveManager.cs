@@ -8,5 +8,6 @@ public class GameSaveManager : MonoBehaviour
     {
         Debug.Log("Progress loaded");
         FindObjectOfType<PlayerController>().LoadPlayer();
+        FindObjectOfType<PetController>().LoadPet();
     }
 }

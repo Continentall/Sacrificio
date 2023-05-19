@@ -11,6 +11,7 @@ public class PlayerData
     public float[] position;
     public float[] minCamPosition;
     public float[] maxCamPosition;
+    public float[] positionPet;
 
     public PlayerData(PlayerController pc, HealthManager hm, CameraController cc)
     {

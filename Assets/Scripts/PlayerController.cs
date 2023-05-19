@@ -10,9 +10,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float speed = 0f;
 
+    public PetController pet;
+    
     private float attackTime = .50f;
     private float attackCounter = .50f;
     private bool isAttacking;
+    
+    
 
     // Start is called before the first frame update
     void Start()
@@ -21,10 +25,9 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        body.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * Time.deltaTime;
+        body.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * Time.fixedDeltaTime;
         animator.SetFloat("moveX", body.velocity.x);
         animator.SetFloat("moveY", body.velocity.y);
 
@@ -33,7 +36,11 @@ public class PlayerController : MonoBehaviour
             animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
-         
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         if(isAttacking)
         {
             body.velocity = Vector2.zero;

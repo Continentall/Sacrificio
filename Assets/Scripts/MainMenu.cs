@@ -15,10 +15,16 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
 
-        string path = Application.persistentDataPath + "/save.scrfc";
-        if (File.Exists(path))
+        string pathPlayer = Application.persistentDataPath + "/saveplayer.scrfc";
+        if (File.Exists(pathPlayer))
         {
-            File.Delete(path);
+            File.Delete(pathPlayer);
+        }
+        
+        string pathPet = Application.persistentDataPath + "/savepet.scrfc";
+        if (File.Exists(pathPet))
+        {
+            File.Delete(pathPet);
         }
     }
 

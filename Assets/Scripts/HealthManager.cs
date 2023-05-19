@@ -13,6 +13,9 @@ public class HealthManager : MonoBehaviour
     private float flashCounter = 0f;
     private SpriteRenderer playerSprite;
 
+    public GameObject defeatGameMenu;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +72,8 @@ public class HealthManager : MonoBehaviour
         if (currentHealth <= 0) 
         {
             gameObject.SetActive(false);
+            defeatGameMenu.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 }
