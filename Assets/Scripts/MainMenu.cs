@@ -16,16 +16,14 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
 
         string pathPlayer = Application.persistentDataPath + "/saveplayer.scrfc";
+        
         if (File.Exists(pathPlayer))
-        {
             File.Delete(pathPlayer);
-        }
         
         string pathPet = Application.persistentDataPath + "/savepet.scrfc";
+        
         if (File.Exists(pathPet))
-        {
             File.Delete(pathPet);
-        }
     }
 
     public void ExitGame()

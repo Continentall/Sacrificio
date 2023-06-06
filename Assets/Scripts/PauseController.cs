@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PauseController : MonoBehaviour
 {
-    public bool PauseGame;
-    public GameObject pauseGameMenu;
+    private bool PauseGame;
+    [SerializeField] private GameObject pauseGameMenu;
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -37,6 +36,7 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 0f;
         PauseGame = true;
     }
+
     public void LoadMenu()
     {
         Time.timeScale = 1f;

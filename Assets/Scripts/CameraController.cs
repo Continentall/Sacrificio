@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform target;
-    public float smoothing;
-    public Vector2 minPosition;
-    public Vector2 maxPosition;
+    [SerializeField] private Transform target;
+    [SerializeField] private float smoothing;
+    [SerializeField] private Vector2 minPosition;
+    [SerializeField] private Vector2 maxPosition;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     void LateUpdate()
     {
         //transform.position = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
@@ -27,5 +21,16 @@ public class CameraController : MonoBehaviour
             
             transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing);
         }
+    }
+
+    public Vector2 MaxPosition
+    {
+        get { return maxPosition; }
+        set { maxPosition = value; }
+    }
+    public Vector2 MinPosition 
+    {
+        get { return minPosition; } 
+        set {  minPosition = value; } 
     }
 }

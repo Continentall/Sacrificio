@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PetData
 {
-    public float[] petPosition;
+    [SerializeField] private float[] petPosition;
 
     public PetData(PetController pet)
     {
@@ -15,5 +15,11 @@ public class PetData
         petPosition[1] = pet.transform.position.y;
         petPosition[2] = pet.transform.position.z;
 
+    }
+
+    public float[] PetPosition 
+    {
+        get { return petPosition; } 
+        set { petPosition = value; } 
     }
 }

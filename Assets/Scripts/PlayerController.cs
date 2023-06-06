@@ -1,28 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D body;
     private Animator animator;
 
-    [SerializeField]
-    private float speed = 0f;
+    [SerializeField] private float speed = 0f;
+    [SerializeField] private AudioSource audioSourceSteps;
+    [SerializeField] private AudioSource audioSourceAttack;
+    [SerializeField] private AudioSource audioSourceAttackHit;
+    [SerializeField] private PetController pet;
+    [SerializeField] private float attackTime = .50f;
+    [SerializeField] private int playerLevel = 1;
+    [SerializeField] private Text playerLevelText;
 
-    public PetController pet;
-    
-    private float attackTime = .50f;
     private float attackCounter = .50f;
     private bool isAttacking;
+    private bool isMoving = false;
     
-    
-
-    // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        audioSourceSteps = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -31,6 +34,23 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("moveX", body.velocity.x);
         animator.SetFloat("moveY", body.velocity.y);
 
+        if (!isMoving)
+        {
+            if (body.velocity.x != 0 || body.velocity.y != 0)
+            {
+                isMoving = true;
+                audioSourceSteps.Play();
+            }
+        }
+        else
+        {
+            if (body.velocity.x == 0 && body.velocity.y == 0)
+            {
+                isMoving = false;
+                audioSourceSteps.Stop();
+            }
+        }
+
         if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
             animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
@@ -38,7 +58,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(isAttacking)
@@ -49,14 +68,15 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("isAttacking", false);
                 isAttacking = false;
+                audioSourceAttack.Stop();
             }
         }
-
         if (Input.GetMouseButtonDown(0))
         {
             attackCounter = attackTime;
             animator.SetBool("isAttacking", true);
             isAttacking = true;
+            audioSourceAttack.Play();
         }
     }
 
@@ -71,22 +91,39 @@ public class PlayerController : MonoBehaviour
         if (data == null)
             return;
         // level = data.level;
-        FindObjectOfType<HealthManager>().currentHealth = data.health;
+        FindObjectOfType<HealthManager>().CurrentHealth = data.Health;
         Vector3 position;
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
+        position.x = data.Position[0];
+        position.y = data.Position[1];
+        position.z = data.Position[2];
         transform.position = position;
         CameraController cc = FindObjectOfType<CameraController>();
         Vector2 miposition;
         Vector2 maposition;
-        miposition.x = data.minCamPosition[0];
-        miposition.y = data.minCamPosition[1];
+        miposition.x = data.MinCamPosition[0];
+        miposition.y = data.MinCamPosition[1];
 
-        maposition.x = data.maxCamPosition[0];
-        maposition.y = data.maxCamPosition[1];
+        maposition.x = data.MaxCamPosition[0];
+        maposition.y = data.MaxCamPosition[1];
 
-        cc.minPosition = miposition;
-        cc.maxPosition = maposition;
+        cc.MinPosition = miposition;
+        cc.MaxPosition = maposition;
+    }
+
+    public void HitTarget()
+    {
+        audioSourceAttackHit.Play();
+    }
+
+    public int PlayerLevel
+    {
+        get { return playerLevel; }
+        set { playerLevel = value; }
+    }
+
+    public void LevelUp()
+    {
+        playerLevel++;
+        playerLevelText.text = $"Level: {playerLevel}"; 
     }
 }

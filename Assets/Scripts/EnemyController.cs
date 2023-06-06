@@ -5,29 +5,20 @@ using Pathfinding;
 [SerializeField]
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField]
-    private Animator myAnim;
-    [SerializeField]
-    private Transform target;
-    [SerializeField]
-    public Transform homePos;
-    public AIDestinationSetter aiDs;
-
-    [SerializeField]
-    private float maxRange = 0f;
-    [SerializeField]
-    private float minRange = 0f;
+    [SerializeField] private Animator myAnim;
+    [SerializeField] private Transform target;
+    [SerializeField] private Transform homePos;
+    [SerializeField] private AIDestinationSetter aiDs;
+    [SerializeField] private float maxRange = 0f;
+    [SerializeField] private float minRange = 0f;
     
-    // Start is called before the first frame update
     void Start()
     {
         myAnim = GetComponent<Animator>();
         target = FindObjectOfType<PlayerController>().transform;
         aiDs = GetComponent<AIDestinationSetter>();
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Vector3.Distance(target.position, transform.position) <= maxRange && Vector3.Distance(target.position, transform.position) >= minRange)
@@ -35,6 +26,7 @@ public class EnemyController : MonoBehaviour
         else if (Vector3.Distance(target.position, transform.position) >= maxRange)
             Evade();
     }
+
     public void FollowPlayer()
     {
         myAnim.SetBool("isMoving", true);
@@ -44,6 +36,7 @@ public class EnemyController : MonoBehaviour
             aiDs.target = target;
         //transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
     }
+
     public void Evade()
     {
         myAnim.SetFloat("moveX", (homePos.position.x - transform.position.x));

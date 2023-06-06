@@ -5,23 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class HurtPlayer : MonoBehaviour
 {
-    [SerializeField]
-    private int Damage = 10;
-    [SerializeField]
-    private float AttackSpeed = 2f;
+    [SerializeField] private int Damage = 10;
+    [SerializeField] private float AttackSpeed = 2f;
+
     private HealthManager HealthMan;
     private float WaitToHurt = 0f;
     private bool IsTouching;
-    
 
-    // Start is called before the first frame update
     void Start()
     {
         WaitToHurt = AttackSpeed;
         HealthMan = FindObjectOfType<HealthManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsTouching)
@@ -43,13 +39,13 @@ public class HurtPlayer : MonoBehaviour
         }
     }
 
-    void OnCollisionStay2D(Collision2D other)
+    private void OnCollisionStay2D(Collision2D other)
     {
         if (other.collider.tag == "Player")
             IsTouching = true;
     }
 
-    void OnCollisionExit2D(Collision2D other)
+    private void OnCollisionExit2D(Collision2D other)
     {
         if (other.collider.tag == "Player")
         {

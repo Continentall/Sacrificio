@@ -6,7 +6,7 @@ using System.IO;
 
 public class DefeatController : MonoBehaviour
 {
-    public GameObject defeatGameMenu;
+    [SerializeField] private GameObject defeatGameMenu;
 
 
     public void ResumeGame()

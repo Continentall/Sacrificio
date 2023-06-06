@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class HurtEnemy : MonoBehaviour
 {
-    public int damage = 5;
-    // Start is called before the first frame update
+    [SerializeField] private int damage = 5;
+    private PlayerController playerC;
+    
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        playerC = FindObjectOfType<PlayerController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,7 +19,7 @@ public class HurtEnemy : MonoBehaviour
             EnemyHealthManager eHM;
             eHM = other.gameObject.GetComponent<EnemyHealthManager>();
             eHM.HurtEnemy(damage);
-             
+            playerC.HitTarget();
         }
     }
 }
