@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         audioSourceSteps = GetComponent<AudioSource>();
+        animator.SetFloat("lastMoveX", 0);
+        animator.SetFloat("lastMoveY", -1);
     }
 
     void FixedUpdate()
@@ -71,7 +73,7 @@ public class PlayerController : MonoBehaviour
                 audioSourceAttack.Stop();
             }
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && Time.timeScale == 1)
         {
             attackCounter = attackTime;
             animator.SetBool("isAttacking", true);

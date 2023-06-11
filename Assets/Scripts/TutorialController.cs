@@ -76,7 +76,7 @@ public class TutorialController : MonoBehaviour
                     {
                         DialogPage.SetActive(true);
                         tname.text = inDialogName;
-                        texts.text = "Что бы атаковать врага нажмите левую конпку мыши";
+                        texts.text = "Что бы атаковать врага нажмите левую кнопку мыши";
                         showPage = true;
                         Debug.Log("Tutorial part attack");
                     }
