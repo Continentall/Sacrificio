@@ -124,6 +124,6 @@ public class PlayerController : MonoBehaviour
     public void LevelUp()
     {
         playerLevel++;
-        playerLevelText.text = $"Level: {playerLevel}"; 
+        playerLevelText.text = $"Уровень: {playerLevel}"; 
     }
 }

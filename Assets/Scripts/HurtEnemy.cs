@@ -14,7 +14,7 @@ public class HurtEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Enemy")
+        if (other.tag == "Enemy" || other.tag == "FinalBoss")
         {
             EnemyHealthManager eHM;
             eHM = other.gameObject.GetComponent<EnemyHealthManager>();
